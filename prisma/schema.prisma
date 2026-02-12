@@ -8,14 +8,24 @@ datasource db {
 }
 
 model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String        @unique
+  password     String
+
+  transactions Transaction[]
 }
 
 model Transaction {
-  id     Int    @id @default(autoincrement())
-  title  String
-  amount Float
-  type   String
+  id        Int      @id @default(autoincrement())
+  title     String
+  amount    Float
+  type      String
+  category  String   @default("General")
+  notes     String?
+  month     String
+  date      DateTime @default(now())
+
+  userId    Int
+  user      User @relation(fields: [userId], references: [id])
 }
